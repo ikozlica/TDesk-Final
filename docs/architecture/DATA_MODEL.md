@@ -1,56 +1,49 @@
 # DATA_MODEL v1 (Phase D)
 
 ## Scope
-This document defines Data Model v1 discipline for TDesk2 MVP.
-It is limited to foundational entities and migration hygiene. No mailbox/email/chat scope is introduced.
+Phase D defines schema and migration contracts for MVP data foundations only.
+Out of scope: mailbox/email/chat.
 
-## Naming conventions
-- **Tables**: `snake_case`, plural nouns (example: `clients`, `orders`).
-- **Columns**: `snake_case`; primary key is `id` (UUID preferred), FK columns end with `_id`.
-- **Indexes**: `ix_<table>__<col1>[_<colN>]`.
-- **Unique constraints**: `uq_<table>__<col1>[_<colN>]`.
-- **Foreign keys**: `fk_<from_table>__<from_col>__<to_table>`.
-- **Check constraints**: `ck_<table>__<rule_name>`.
+## DB naming conventions
+- Tables: `snake_case`, plural (`clients`, `orders`).
+- Columns: `snake_case`.
+- Primary keys: `pk_<table>`.
+- Foreign keys: `fk_<from_table>__<from_col>__<to_table>`.
+- Unique constraints: `uq_<table>__<col1>[_<colN>]`.
+- Indexes: `ix_<table>__<col1>[_<colN>]`.
+- Check constraints: `ck_<table>__<rule_name>`.
 
 ## Nullability policy
-- Default posture: business-critical fields are `NOT NULL`.
-- Nullable allowed only when absence is a valid domain state:
-  - optional references (`approved_by_user_id`),
-  - optional timestamps (`paid_at`, `deleted_at`),
-  - optional metadata (`external_reference`).
-- New columns should be introduced with:
-  1. nullable + backfill,
-  2. then `NOT NULL` migration when safe.
+- Default: columns are `NOT NULL`.
+- Nullable only when absence is a valid domain state (`deleted_at`, optional external IDs, optional actor refs).
+- New required columns use phased rollout: nullable -> backfill -> enforce `NOT NULL`.
 
-## Soft-delete policy
-- Soft-delete applies to mutable business records (`clients`, `orders`, `invoices`, `payments`) using `deleted_at TIMESTAMPTZ NULL`.
-- Soft-deleted rows remain queryable for audit and financial consistency.
-- Hard-delete is restricted to:
-  - lookup/reference seed data replacement under maintenance windows,
-  - pre-production cleanup.
-- Financial records are append-first; state transitions are preferred over delete.
+## FK policy
+- Default: `ON UPDATE RESTRICT`.
+- Financial chain `Client -> Order -> Invoice -> Payment`: `ON DELETE RESTRICT`.
+- `ON DELETE SET NULL` only for truly optional references.
+- `ON DELETE CASCADE` only for technical dependent rows without business identity.
 
-## FK strategy
-- Default `ON UPDATE RESTRICT`.
-- Default `ON DELETE RESTRICT` for accounting chain (`clients -> orders -> invoices -> payments`) to preserve history.
-- `ON DELETE SET NULL` permitted only for optional references where domain rules allow orphaning.
-- `ON DELETE CASCADE` only for purely technical child rows with no business identity.
+## Soft-delete and immutability policy
+- `deleted_at` allowed for mutable aggregates that may be hidden operationally (clients/orders).
+- Invoices/payments are financially sensitive: append-only lifecycle preferred; no destructive deletes.
+- Immutable/audit records must remain history-preserving.
 
-## Index strategy
-Required baseline indexes for first vertical slice:
-- `clients`: unique business key (`tenant_id`, `client_code`).
-- `orders`: unique (`tenant_id`, `order_number`), plus index on (`tenant_id`, `client_id`, `created_at`).
-- `invoices`: unique (`tenant_id`, `invoice_number`), index on (`tenant_id`, `order_id`).
-- `payments`: unique external id per tenant when present (`tenant_id`, `provider_payment_id`) with partial-unique semantics if nullable.
-- Soft-delete aware access paths should include `deleted_at` when query plans require it.
+## Index policy for critical workflows
+Minimum guarantees for Client -> Order -> Invoice -> Payment:
+- `clients`: `uq_clients__tenant_id_client_code`.
+- `orders`: `uq_orders__tenant_id_order_number`; supporting read index on `(tenant_id, client_id, created_at)`.
+- `invoices`: `uq_invoices__tenant_id_invoice_number`; supporting index on `(tenant_id, order_id)`.
+- `payments`: uniqueness for provider reference per tenant when present (partial unique semantics if nullable).
 
-## Baseline entity contract (Phase D prep only)
-- **Client**: identity + lifecycle status.
-- **Order**: belongs to client.
-- **Invoice**: belongs to order.
-- **Payment**: belongs to invoice.
-- Cross-entity invariants are enforced in domain/application layers; schema enforces identity/referential integrity only.
+## Vertical slice contract readiness
+Phase D guarantees referential chain feasibility:
+- `orders.client_id -> clients.id`
+- `invoices.order_id -> orders.id`
+- `payments.invoice_id -> invoices.id`
+
+Business invariants remain in domain/application layers.
 
 ## Secrets policy
-- Never commit secrets/passwords/connection URLs with credentials in migrations, fixtures, or scripts.
-- Migration scripts must read connection info from environment variables.
+- Secrets are forbidden in repository files, migrations, and script output.
+- Connection details are environment-driven only.

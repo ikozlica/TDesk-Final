@@ -1,27 +1,33 @@
-# TEST STRATEGY (Phase D update)
+# TEST STRATEGY (Phase D)
 
 ## Goal
-Add migration safety checks as a required quality gate.
+Enforce production-grade data/migration safety gates before merge.
 
-## Required checks
-- Lint/type/test baseline:
-  - `ruff check src tests`
-  - `mypy src`
-  - `pytest -q`
-- Migration checks:
-  - `alembic heads`
-  - `alembic current`
-  - `alembic history`
-  - `alembic upgrade head` against clean test DB
-  - `scripts/db_verify.sh`
+## Phase D QA gates (local + CI)
+Required commands:
+- `ruff check src tests`
+- `mypy src`
+- `pytest -q`
+- `alembic heads`
+- `alembic history`
+- `alembic upgrade head` (clean DB)
+- `alembic current`
+- `scripts/db_verify.sh`
 
-## Migration-specific assertions
-- Upgrade from clean DB to head succeeds.
-- Branch has no unexpected multiple heads for main-targeted change.
-- Key schema artifacts exist (tables/indexes/constraints for Client→Order→Invoice→Payment chain).
-- Verify process is idempotent (rerun produces same successful outcome).
+## Migration verification assertions
+- Single-head policy is enforced for `main` target branches.
+- History chain is continuous and readable.
+- Upgrade from clean DB to `head` succeeds.
+- Current revision equals expected head revision.
+- Verification scripts return non-zero exit code on policy violations.
+
+## Rollback and rollout QA
+For potentially unsafe migrations, tests must validate staged rollout:
+- expand step is backward-compatible,
+- backfill is idempotent,
+- contract step is executed only after safety checks.
 
 ## CI posture
-- Run migration verification as a separate job/stage.
-- Block merges when migration job fails.
-- Persist Alembic command output as build artifacts for investigation.
+- Run migration checks as a dedicated blocking stage.
+- Archive Alembic/script logs as CI artifacts.
+- Any failure in Phase D gates blocks merge.
