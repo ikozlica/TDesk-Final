@@ -1,8 +1,14 @@
 {
-  "version": "0.0.0",
-  "installer_url": "about:blank",
-  "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-  "notes": [],
-  "mandatory": false,
-  "silent_args": []
+    "version":  "0.1.0",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.0/TDesk2-0.1.0-Setup.exe",
+    "sha256":  "95a08b3aeb26d8a5f829fd443fb46310b26b3c6cf694d846b27fe5c9670c92d5",
+    "notes":  [
+                  "Prva instalirana verzija TDesk2"
+              ],
+    "mandatory":  false,
+    "silent_args":  [
+                        "/VERYSILENT",
+                        "/SUPPRESSMSGBOXES",
+                        "/NORESTART"
+                    ]
 }
