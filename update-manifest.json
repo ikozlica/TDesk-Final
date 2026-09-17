@@ -1,9 +1,9 @@
 {
-    "version":  "0.1.3",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.3/TDesk2-0.1.3-Setup.exe",
-    "sha256":  "3250c5ea8be13b1c60647db917f4c2e93f3a47c5698ae8613f78c101c3718394",
+    "version":  "0.1.4",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.4/TDesk2-0.1.4-Setup.exe",
+    "sha256":  "047fd8fd5b294102c3b74aaccfd9405eb028a7b3ec0457743387b21af729b10f",
     "notes":  [
-                  "Улучшен процесс обновления: проверка после открытия главного окна, отображение прогресса загрузки, уведомление перед перезапуском и версия в окне О программе."
+                  "Новый фирменный интерфейс загрузки обновления TDesk 2.0. Исправлен запуск updater и ошибка batch file cannot be found."
               ],
     "mandatory":  false,
     "silent_args":  [
