@@ -1,9 +1,9 @@
 {
-    "version":  "0.1.4",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.4/TDesk2-0.1.4-Setup.exe",
-    "sha256":  "047fd8fd5b294102c3b74aaccfd9405eb028a7b3ec0457743387b21af729b10f",
+    "version":  "0.1.5",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.5/TDesk2-0.1.5-Setup.exe",
+    "sha256":  "989872c84ce71f18f9914f40de002d2ead148eda21d4974bc427481a3e47d88d",
     "notes":  [
-                  "Новый фирменный интерфейс загрузки обновления TDesk 2.0. Исправлен запуск updater и ошибка batch file cannot be found."
+                  "Новый интерфейс меню, улучшенный backup/restore, фирменные progress-бары, исправлен restore для Supabase, компактный toolbar."
               ],
     "mandatory":  false,
     "silent_args":  [
