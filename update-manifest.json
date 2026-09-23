@@ -1,14 +1,13 @@
 {
-    "version":  "0.1.5",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.5/TDesk2-0.1.5-Setup.exe",
-    "sha256":  "989872c84ce71f18f9914f40de002d2ead148eda21d4974bc427481a3e47d88d",
-    "notes":  [
-                  "Новый интерфейс меню, улучшенный backup/restore, фирменные progress-бары, исправлен restore для Supabase, компактный toolbar."
-              ],
-    "mandatory":  false,
-    "silent_args":  [
-                        "/VERYSILENT",
-                        "/SUPPRESSMSGBOXES",
-                        "/NORESTART"
-                    ]
+    "version": "0.1.5",
+    "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.5/TDesk2-0.1.5-Setup.exe",
+    "sha256": "989872c84ce71f18f9914f40de002d2ead148eda21d4974bc427481a3e47d88d",
+    "notes": [
+        "Новый интерфейс меню, улучшенный backup/restore, фирменные progress-бары, исправлен restore для Supabase, компактный toolbar."
+    ],
+    "mandatory": false,
+    "silent_args": [
+        "/SILENT",
+        "/NORESTART"
+    ]
 }
