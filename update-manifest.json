@@ -1,9 +1,9 @@
 {
-    "version":  "0.1.7",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.7/TDesk2-0.1.7-Setup.exe",
-    "sha256":  "9a1be82fb22ca68ff7c14d0a42377a2076db4657d6a9b2d11d95c6e83333bfb6",
+    "version":  "0.1.8",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.8/TDesk2-0.1.8-Setup.exe",
+    "sha256":  "90582c3a9e25eb831a96fe78620070a476ab254ee61ba32e9f72c5ed825af2de",
     "notes":  [
-                  "Новый внешний фирменный updater показывает весь процесс установки, миграции и перезапуска TDesk2."
+                  "Исправлен эффект нажатия основных кнопок. Полный тест нового внешнего updater: скачивание, установка, миграция базы и автоматический перезапуск."
               ],
     "mandatory":  false,
     "silent_args":  [
