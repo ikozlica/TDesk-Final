@@ -1,9 +1,9 @@
 {
-    "version":  "0.1.6",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.6/TDesk2-0.1.6-Setup.exe",
-    "sha256":  "e2c078126ea690235713bafa4a8445cf36058e3004b2d21725ead7b4d268ea81",
+    "version":  "0.1.7",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.7/TDesk2-0.1.7-Setup.exe",
+    "sha256":  "9a1be82fb22ca68ff7c14d0a42377a2076db4657d6a9b2d11d95c6e83333bfb6",
     "notes":  [
-                  "Исправлена версия установленной программы, фирменная иконка Windows, индикатор доступного обновления, компактное окно обновления и диагностика updater."
+                  "Новый внешний фирменный updater показывает весь процесс установки, миграции и перезапуска TDesk2."
               ],
     "mandatory":  false,
     "silent_args":  [
