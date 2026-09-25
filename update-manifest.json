@@ -1,9 +1,11 @@
 {
-    "version":  "0.1.8",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.8/TDesk2-0.1.8-Setup.exe",
-    "sha256":  "90582c3a9e25eb831a96fe78620070a476ab254ee61ba32e9f72c5ed825af2de",
+    "version":  "0.1.9",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.9/TDesk2-0.1.9-Setup.exe",
+    "sha256":  "24d3169c3eb68d88533b078e45d625d971ff8e3f27862d3c8d24e33a7a082583",
     "notes":  [
-                  "Исправлен эффект нажатия основных кнопок. Полный тест нового внешнего updater: скачивание, установка, миграция базы и автоматический перезапуск."
+                  "Исправлена упаковка Alembic: зависимости миграций включаются в frozen-сборку.",
+                  "Добавлена проверка migration bundle перед выпуском обновления.",
+                  "Исправлена подготовка OCR-инструментов для чистой release-сборки."
               ],
     "mandatory":  false,
     "silent_args":  [
