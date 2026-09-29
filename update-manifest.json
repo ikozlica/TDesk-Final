@@ -1,13 +1,11 @@
 {
-    "version":  "0.1.11",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.11/TDesk2-0.1.11-Setup.exe",
-    "sha256":  "dfbc06b54a5789ce173b9dd7a8934ed593bb7ae0238efc74f0df857d68a034e0",
+    "version":  "0.1.12",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.12/TDesk2-0.1.12-Setup.exe",
+    "sha256":  "be3152c66c05fd74e5eee4bf4117c7c7ef07ab471f6e26d1ccbcc0b38ec88754",
     "notes":  [
-                  "Добавлены скидки и срочные наценки по цепочке Заказ → Ponuda → Račun, включая PDF и UBL.",
-                  "Исправлено создание счетов из Ponuda, связанных с заказами: строки, суммы и корректировки цены берутся из заказа.",
-                  "Оптимизированы Dashboard, финансовые экраны и фоновые обновления.",
-                  "Улучшена надежность хранения файлов и повторной legacy-миграции.",
-                  "Добавлены новые миграции базы и регрессионные тесты."
+                  "Obnovljen UI i stabilizirano otvaranje glavnog prozora.",
+                  "Vraćen fizički efekt pritiska navigacijskih tipki.",
+                  "Dodane regresijske zaštite za glavne dijaloge, Login i Splash."
               ],
     "mandatory":  false,
     "silent_args":  [
