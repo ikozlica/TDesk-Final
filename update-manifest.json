@@ -1,16 +1,29 @@
 {
-    "version":  "0.1.12",
-    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.12/TDesk2-0.1.12-Setup.exe",
-    "sha256":  "be3152c66c05fd74e5eee4bf4117c7c7ef07ab471f6e26d1ccbcc0b38ec88754",
+    "version":  "0.1.13",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.13/TDesk2-0.1.13-Patch-from-0.1.12.exe",
+    "sha256":  "d5853e8bb1cea6ea8f20919b878cf7fb42b5c6c4057d6105adf8d06f461c19ca",
+    "full_installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.13/TDesk2-0.1.13-Setup.exe",
+    "full_sha256":  "2888dd385e9797f9a2692e129af51e1cd09e9eeb048c6766680bd6fa7e37527e",
+    "file_manifest_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.13/TDesk2-0.1.13-files.json",
+    "file_manifest_sha256":  "b22106d07498773eb6cbd445e4ef49ec1d431a51da7a900daea01cd91b753081",
     "notes":  [
-                  "Obnovljen UI i stabilizirano otvaranje glavnog prozora.",
-                  "Vraćen fizički efekt pritiska navigacijskih tipki.",
-                  "Dodane regresijske zaštite za glavne dijaloge, Login i Splash."
+
               ],
     "mandatory":  false,
     "silent_args":  [
                         "/VERYSILENT",
                         "/SUPPRESSMSGBOXES",
                         "/NORESTART"
-                    ]
+                    ],
+    "patches":  {
+                    "0.1.12":  {
+                                   "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.13/TDesk2-0.1.13-Patch-from-0.1.12.exe",
+                                   "sha256":  "d5853e8bb1cea6ea8f20919b878cf7fb42b5c6c4057d6105adf8d06f461c19ca",
+                                   "silent_args":  [
+                                                       "/VERYSILENT",
+                                                       "/SUPPRESSMSGBOXES",
+                                                       "/NORESTART"
+                                                   ]
+                               }
+                }
 }
