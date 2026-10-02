@@ -1,12 +1,15 @@
 {
-  "version": "0.1.14",
-  "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-Setup.exe",
-  "sha256": "9993d07df2a214aa39cc5a155e317a072ab9e5af0761347d949b4f8689d85ff1",
-  "full_installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-Setup.exe",
-  "full_sha256": "9993d07df2a214aa39cc5a155e317a072ab9e5af0761347d949b4f8689d85ff1",
-  "file_manifest_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-files.json",
-  "file_manifest_sha256": "a8b5bbc1e8616a1ccb5004659163861468a0c43df51e7b5fc8cbba75a8104650",
-  "notes": [],
+  "version": "0.1.16",
+  "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.16/TDesk2-0.1.16-Setup.exe",
+  "sha256": "ec6cfe03c385f259f9de6e0da0c083c929352a9aab63e396174b4f611af7d45a",
+  "full_installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.16/TDesk2-0.1.16-Setup.exe",
+  "full_sha256": "ec6cfe03c385f259f9de6e0da0c083c929352a9aab63e396174b4f611af7d45a",
+  "file_manifest_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.16/TDesk2-0.1.16-files.json",
+  "file_manifest_sha256": "b17f6fd4db52b656a665cbbd9ba503b694334a38a9c4f5e4f9f155073332f3f0",
+  "notes": [
+    "Restored stable Windows runtime.",
+    "Shared Google Drive authorization for TDesk2 workstations."
+  ],
   "mandatory": false,
   "silent_args": [
     "/VERYSILENT",
@@ -14,9 +17,9 @@
     "/NORESTART"
   ],
   "patches": {
-    "0.1.13": {
-      "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-Patch-from-0.1.13.exe",
-      "sha256": "ecd533a875fd2a65e447df27befec12b6167b5e86c5d394c901f3fcdee1d4a24",
+    "0.1.14": {
+      "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.16/TDesk2-0.1.16-Patch-from-0.1.14.exe",
+      "sha256": "2fe0c062220de29db7a337035ab2e6123250a210ef69deb2a82c6dc2e8cf3460",
       "silent_args": [
         "/VERYSILENT",
         "/SUPPRESSMSGBOXES",
