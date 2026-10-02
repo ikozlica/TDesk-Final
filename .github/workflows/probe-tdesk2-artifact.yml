@@ -1,0 +1,24 @@
+name: Probe TDesk2 artifact access
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/probe-tdesk2-artifact.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Probe cross-repo artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api -i repos/ikozlica/TDesk2/actions/artifacts/11223499802
