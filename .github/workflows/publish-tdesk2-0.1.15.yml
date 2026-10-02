@@ -1,0 +1,105 @@
+name: Publish TDesk2 0.1.15
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/publish-tdesk2-0.1.15.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download release transport chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p transport
+          curl -fL --retry 3 'https://sdmntprdenmarkeast.oaiusercontent.com/files/00000000-28d0-8210-861e-f928f5d64308/raw?se=2026-10-02T10%3A43%3A02Z&sp=r&sv=2026-02-06&sr=b&scid=4b962cc6-f295-517d-910c-3424a35425d4&skoid=0a4a0f0c-99ac-4752-9d87-cfac036fa93f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-02T05%3A55%3A04Z&ske=2026-10-03T05%3A55%3A04Z&sks=b&skv=2026-02-06&sig=XIZI1OypL51hASX2gNIa%2Bd5NZU2wPICyvN3MD42zGJk%3D' -o transport/meta.zip &
+          p0=$!
+          curl -fL --retry 3 'https://sdmntprnortheu.oaiusercontent.com/files/00000000-e38c-81f4-baa3-afc87040cd6a/raw?se=2026-10-02T10%3A43%3A50Z&sp=r&sv=2026-02-06&sr=b&scid=cef8e32e-6752-54f9-bc44-7e539dc87fb4&skoid=0a4a0f0c-99ac-4752-9d87-cfac036fa93f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-02T00%3A54%3A36Z&ske=2026-10-03T00%3A54%3A36Z&sks=b&skv=2026-02-06&sig=6XEtUmS1zTtMFNkOTqO/pujiRDikFXNHQ9Pc3zt0BFE%3D' -o transport/chunk000.zip &
+          p1=$!
+          curl -fL --retry 3 'https://sdmntprnortheu.oaiusercontent.com/files/00000000-18a4-81f4-8228-348cfb2d04c9/raw?se=2026-10-02T10%3A44%3A29Z&sp=r&sv=2026-02-06&sr=b&scid=d80af311-d213-5e48-8baf-c39c80c8fd1c&skoid=0a4a0f0c-99ac-4752-9d87-cfac036fa93f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-02T06%3A30%3A05Z&ske=2026-10-03T06%3A30%3A05Z&sks=b&skv=2026-02-06&sig=OQOeb0YVe3RxbKo4%2B5IwrqZwKGUE3uDEK0cqVQp4B4U%3D' -o transport/chunk001.zip &
+          p2=$!
+          curl -fL --retry 3 'https://sdmntprdenmarkeast.oaiusercontent.com/files/00000000-e8d0-8210-87fa-20e57c45a4cf/raw?se=2026-10-02T10%3A45%3A05Z&sp=r&sv=2026-02-06&sr=b&scid=4a265ade-0ea0-5b4e-8fcd-4104ef7ac06f&skoid=0a4a0f0c-99ac-4752-9d87-cfac036fa93f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-02T07%3A45%3A54Z&ske=2026-10-03T07%3A45%3A54Z&sks=b&skv=2026-02-06&sig=cMLNmX9pFjhZiJ5LCMCDKjs9%2B5gE2yDkRKSUpNqVC84%3D' -o transport/chunk002.zip &
+          p3=$!
+          curl -fL --retry 3 'https://sdmntprdenmarkeast.oaiusercontent.com/files/00000000-fc18-8210-81d3-1fb2cfa38bd5/raw?se=2026-10-02T10%3A45%3A14Z&sp=r&sv=2026-02-06&sr=b&scid=53e34a72-9187-5d65-aa42-18d980aefa08&skoid=0a4a0f0c-99ac-4752-9d87-cfac036fa93f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-02T00%3A49%3A59Z&ske=2026-10-03T00%3A49%3A59Z&sks=b&skv=2026-02-06&sig=t%2BDsD/ivPXTdEWzjpIhx9DhWv/9QXBxjWqONPqzkn5s%3D' -o transport/chunk003.zip &
+          p4=$!
+          wait "$p0" "$p1" "$p2" "$p3" "$p4"
+
+      - name: Reconstruct immutable release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p parts release
+          unzip -q transport/meta.zip -d parts
+          unzip -q transport/chunk000.zip -d parts
+          unzip -q transport/chunk001.zip -d parts
+          unzip -q transport/chunk002.zip -d parts
+          unzip -q transport/chunk003.zip -d parts
+
+          cat parts/TDesk2-0.1.15-Setup.exe.part000               parts/TDesk2-0.1.15-Setup.exe.part001               parts/TDesk2-0.1.15-Setup.exe.part002               parts/TDesk2-0.1.15-Setup.exe.part003               > release/TDesk2-0.1.15-Setup.exe
+
+          cat parts/TDesk2-0.1.15-Patch-from-0.1.14.exe.part000               parts/TDesk2-0.1.15-Patch-from-0.1.14.exe.part001               parts/TDesk2-0.1.15-Patch-from-0.1.14.exe.part002               parts/TDesk2-0.1.15-Patch-from-0.1.14.exe.part003               > release/TDesk2-0.1.15-Patch-from-0.1.14.exe
+
+          cp parts/TDesk2-0.1.15-files.json release/
+
+          test "$(sha256sum release/TDesk2-0.1.15-Setup.exe | awk '{print $1}')" = "45d4dc90d41a2711ac1b47582eab74c963a12d4d9f9335ed57e6c95c0e027c32"
+          test "$(sha256sum release/TDesk2-0.1.15-Patch-from-0.1.14.exe | awk '{print $1}')" = "d405658af506544dd918e32197661f8164df78d9d825c46502b76cb51de069d3"
+          test "$(sha256sum release/TDesk2-0.1.15-files.json | awk '{print $1}')" = "8d74a9bd8944c5adbd98312750fec2e954617202e509d02990c450c10f2523f5"
+
+      - name: Publish GitHub Release
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release create v0.1.15             release/TDesk2-0.1.15-Setup.exe             release/TDesk2-0.1.15-Patch-from-0.1.14.exe             release/TDesk2-0.1.15-files.json             --repo "${GITHUB_REPOSITORY}"             --title "TDesk2 0.1.15"             --notes "Shared Google Drive authorization for TDesk2 workstations. Existing 0.1.14 installations can update normally from inside TDesk2."             --latest
+
+      - name: Publish production update manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > update-manifest.json <<'JSON'
+          {
+            "version": "0.1.15",
+            "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-Setup.exe",
+            "sha256": "45d4dc90d41a2711ac1b47582eab74c963a12d4d9f9335ed57e6c95c0e027c32",
+            "full_installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-Setup.exe",
+            "full_sha256": "45d4dc90d41a2711ac1b47582eab74c963a12d4d9f9335ed57e6c95c0e027c32",
+            "file_manifest_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-files.json",
+            "file_manifest_sha256": "8d74a9bd8944c5adbd98312750fec2e954617202e509d02990c450c10f2523f5",
+            "notes": [
+              "Google Drive connection is shared automatically between TDesk2 workstations."
+            ],
+            "mandatory": false,
+            "silent_args": [
+              "/VERYSILENT",
+              "/SUPPRESSMSGBOXES",
+              "/NORESTART"
+            ],
+            "patches": {
+              "0.1.14": {
+                "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-Patch-from-0.1.14.exe",
+                "sha256": "d405658af506544dd918e32197661f8164df78d9d825c46502b76cb51de069d3",
+                "silent_args": [
+                  "/VERYSILENT",
+                  "/SUPPRESSMSGBOXES",
+                  "/NORESTART"
+                ]
+              }
+            }
+          }
+          JSON
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add update-manifest.json
+          git commit -m "Publish TDesk2 0.1.15 update manifest"
+          git push origin HEAD:main
