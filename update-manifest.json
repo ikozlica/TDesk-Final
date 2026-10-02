@@ -1,14 +1,12 @@
 {
-  "version": "0.1.15",
-  "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-Setup.exe",
-  "sha256": "45d4dc90d41a2711ac1b47582eab74c963a12d4d9f9335ed57e6c95c0e027c32",
-  "full_installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-Setup.exe",
-  "full_sha256": "45d4dc90d41a2711ac1b47582eab74c963a12d4d9f9335ed57e6c95c0e027c32",
-  "file_manifest_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-files.json",
-  "file_manifest_sha256": "8d74a9bd8944c5adbd98312750fec2e954617202e509d02990c450c10f2523f5",
-  "notes": [
-    "Google Drive connection is shared automatically between TDesk2 workstations."
-  ],
+  "version": "0.1.14",
+  "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-Setup.exe",
+  "sha256": "9993d07df2a214aa39cc5a155e317a072ab9e5af0761347d949b4f8689d85ff1",
+  "full_installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-Setup.exe",
+  "full_sha256": "9993d07df2a214aa39cc5a155e317a072ab9e5af0761347d949b4f8689d85ff1",
+  "file_manifest_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-files.json",
+  "file_manifest_sha256": "a8b5bbc1e8616a1ccb5004659163861468a0c43df51e7b5fc8cbba75a8104650",
+  "notes": [],
   "mandatory": false,
   "silent_args": [
     "/VERYSILENT",
@@ -16,9 +14,9 @@
     "/NORESTART"
   ],
   "patches": {
-    "0.1.14": {
-      "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.15/TDesk2-0.1.15-Patch-from-0.1.14.exe",
-      "sha256": "d405658af506544dd918e32197661f8164df78d9d825c46502b76cb51de069d3",
+    "0.1.13": {
+      "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.14/TDesk2-0.1.14-Patch-from-0.1.13.exe",
+      "sha256": "ecd533a875fd2a65e447df27befec12b6167b5e86c5d394c901f3fcdee1d4a24",
       "silent_args": [
         "/VERYSILENT",
         "/SUPPRESSMSGBOXES",
