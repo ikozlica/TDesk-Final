@@ -1,16 +1,16 @@
-{
-  "version": "0.1.17",
-  "installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.17/TDesk2-0.1.17-LegacyBridge.exe",
-  "sha256": "34c7314d8119f7d01a2e7846a40ef5c20141bb58820881c1a17b096fa59b1328",
-  "full_installer_url": "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.17/TDesk2-0.1.17-LegacyBridge.exe",
-  "full_sha256": "34c7314d8119f7d01a2e7846a40ef5c20141bb58820881c1a17b096fa59b1328",
-  "notes": [
-    "Jednokratni prijelaz na novi brzi sustav azuriranja TDesk2."
-  ],
-  "mandatory": false,
-  "silent_args": [
-    "/VERYSILENT",
-    "/SUPPRESSMSGBOXES",
-    "/NORESTART"
-  ]
+﻿{
+    "version":  "0.1.17",
+    "installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.17/TDesk2-0.1.17-LegacyBridge-RestartFix.exe",
+    "sha256":  "ab1d6d06744500ece90fc5f38ec3b83f7d92b29bec1b0bb5ed2f4def12098703",
+    "full_installer_url":  "https://github.com/ikozlica/TDesk-Final/releases/download/v0.1.17/TDesk2-0.1.17-LegacyBridge-RestartFix.exe",
+    "full_sha256":  "ab1d6d06744500ece90fc5f38ec3b83f7d92b29bec1b0bb5ed2f4def12098703",
+    "notes":  [
+                  "Jednokratni prijelaz na Velopack s automatskim ponovnim pokretanjem TDesk2."
+              ],
+    "mandatory":  false,
+    "silent_args":  [
+                        "/VERYSILENT",
+                        "/SUPPRESSMSGBOXES",
+                        "/NORESTART"
+                    ]
 }
