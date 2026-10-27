@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src https://cdn.jsdelivr.net 'unsafe-inline'; connect-src https://kxnapnjflkvydngvvlje.supabase.co; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'"/>
+<title>Arseniy — подтверждение доступа</title>
+<style>*{box-sizing:border-box}body{font:16px system-ui,-apple-system,'Segoe UI',sans-serif;background:#f6f8fc;margin:0;padding:4rem 1rem;color:#1c2633}.panel{max-width:490px;margin:0 auto;background:#fff;border:1px solid #e4e8f0;padding:2rem;border-radius:16px;box-shadow:0 4px 25px #1111}h1{font-size:1.5rem;margin-top:0}p{line-height:1.5}label{display:block;margin:12px 0 5px}input,button{width:100%;font:inherit;padding:12px 13px;border-radius:8px;border:1px solid #cad1df}button{margin-top:14px;cursor:pointer;background:#194edd;color:#fff;border:0}button.secondary{background:#fff;color:#243d74;border:1px solid #bbc8e0}button:disabled{opacity:.55}#message{color:#9b251d;white-space:pre-wrap}small{display:block;margin-top:18px;color:#656e82}code{overflow-wrap:anywhere}#client,#scopes{font-weight:600}</style>
+</head><body><main class="panel"><h1>🔐 Arseniy — доступ к Planner+</h1>
+<p id="intro">Вход в личный AI-Secretary. Доступ к Planner+ будет предоставлен только после твоего подтверждения.</p>
+<p id="message" role="alert"></p>
+<section id="login" hidden><label for="email">Email AI-Secretary</label><input id="email" type="email" autocomplete="username"/>
+<label for="password">Пароль AI-Secretary</label><input id="password" type="password" autocomplete="current-password"/>
+<button id="signIn">Войти</button></section>
+<section id="consent" hidden><p>Приложение: <span id="client"></span></p><p>Запрашиваемые разрешения: <span id="scopes"></span></p><p>Разрешить этому приложению обратиться к серверу Arseniy от твоего имени?</p>
+<button id="approve">Разрешить доступ</button><button class="secondary" id="deny">Отказать</button></section>
+<section id="done" hidden><p>Открой эту страницу через подключение Arseniy в ChatGPT. Ссылка без запроса авторизации не выдаёт доступ к данным.</p></section>
+<small>Пароль используется только для входа в Supabase Auth. На GitHub он не отправляется и нигде на странице не сохраняется.</small></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.min.js"></script>
+<script>
+'use strict';
+const BASE='https://kxnapnjflkvydngvvlje.supabase.co';
+const PUB="sb_publishable_Bk9gUIjRd1LZmTAe0Kzeyw_CKutCFdN";
+const sb=window.supabase?.createClient(BASE,PUB,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:'arseniy-ai-secretary-oauth'}});
+const id=new URLSearchParams(location.search).get('authorization_id');
+const $=s=>document.getElementById(s);
+const show=s=>{for(const x of ['login','consent','done'])$(x).hidden=x!==s;};
+const msg=s=>$('message').textContent=s||'';
+const busy=(yes)=>{for(const x of ['signIn','approve','deny'])$(x).disabled=yes;};
+async function start(){
+  if(!sb){msg('Не удалось загрузить библиотеку Supabase. Обнови страницу.');return;}
+  if(!id){show('done');return;}
+  const {data:{session},error}=await sb.auth.getSession();
+  if(error){msg('Не удалось проверить вход: '+error.message);return;}
+  if(!session){show('login');return;}
+  await details();
+}
+async function details(){
+  busy(true);msg('');
+  try{
+    const {data,error}=await sb.auth.oauth.getAuthorizationDetails(id);
+    if(error)throw error;
+    if(!data)throw Error('Запрос авторизации не найден или истёк');
+    if(!('authorization_id' in data)&&data.redirect_url){location.assign(data.redirect_url);return;}
+    $('client').textContent=data.client?.name||data.client?.client_name||data.client?.id||'Неизвестное приложение';
+    $('scopes').textContent=data.scope||'(не указаны)';
+    show('consent');
+  }catch(e){msg('Не удалось получить детали доступа: '+e.message);}
+  finally{busy(false);}
+}
+$('signIn').addEventListener('click',async()=>{
+  busy(true);msg('');
+  const email=$('email').value.trim(), password=$('password').value;
+  if(!email||!password){busy(false);msg('Заполни email и пароль.');return;}
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  $('password').value='';
+  if(error){msg('Ошибка входа: '+error.message);busy(false);return;}
+  await details();
+});
+for(const mode of ['approve','deny']){
+ $(mode).addEventListener('click',async()=>{
+   busy(true);msg('');
+   try{
+    const {data,error}=await (mode==='approve'?sb.auth.oauth.approveAuthorization(id):sb.auth.oauth.denyAuthorization(id));
+    if(error)throw error;
+    if(!data?.redirect_url)throw Error('Нет адреса возврата');
+    location.assign(data.redirect_url);
+   }catch(e){msg('Ошибка авторизации: '+e.message);busy(false);}
+ });
+}
+start().catch(e=>msg('Ошибка: '+e.message));
+</script></body></html>
