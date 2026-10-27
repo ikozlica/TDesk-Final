@@ -18,7 +18,7 @@
 'use strict';
 const BASE='https://kxnapnjflkvydngvvlje.supabase.co';
 const PUB="sb_publishable_Bk9gUIjRd1LZmTAe0Kzeyw_CKutCFdN";
-const sb=window.supabase?.createClient(BASE,PUB,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:'arseniy-ai-secretary-oauth'}});
+const sb=window.supabase?.createClient(BASE,PUB,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false,storageKey:'arseniy-oauth-ephemeral'}});
 const id=new URLSearchParams(location.search).get('authorization_id');
 const $=s=>document.getElementById(s);
 const show=s=>{for(const x of ['login','consent','done'])$(x).hidden=x!==s;};
